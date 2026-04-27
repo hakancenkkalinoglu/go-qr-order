@@ -1,0 +1,35 @@
+package services
+
+import (
+	"go-qr-order/internal/models"
+	"go-qr-order/internal/repository"
+	"time"
+)
+
+type OrderService struct {
+	repo *repository.InMemoryOrderRepo
+}
+
+// Constructor
+func NewOrderService(r *repository.InMemoryOrderRepo) OrderService {
+	return OrderService{
+		repo: r,
+	}
+}
+
+func (s *OrderService) CreateOrder(order models.Order) models.Order {
+	order.CreatedAt = time.Now()
+	order.UpdatedAt = time.Now()
+
+	if order.Status == "" {
+		order.Status = "PENDING"
+	}
+
+	s.repo.Save(order)
+
+	return order
+}
+
+func (s *OrderService) GetOrder(id int) (models.Order, bool) {
+	return s.repo.GetById(id)
+}
