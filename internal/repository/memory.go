@@ -6,6 +6,7 @@ import (
 
 type InMemoryOrderRepo struct {
 	orders map[int]models.Order
+	lastID int
 }
 
 func NewInMemoryOrderRepo() *InMemoryOrderRepo {
@@ -14,8 +15,13 @@ func NewInMemoryOrderRepo() *InMemoryOrderRepo {
 	}
 }
 
-func (r *InMemoryOrderRepo) Save(order models.Order) {
+func (r *InMemoryOrderRepo) Save(order models.Order) models.Order {
+	r.lastID++
+
+	order.ID = r.lastID
 	r.orders[order.ID] = order
+
+	return order
 }
 
 func (r *InMemoryOrderRepo) GetById(id int) (models.Order, bool) {
