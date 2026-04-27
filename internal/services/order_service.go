@@ -11,8 +11,8 @@ type OrderService struct {
 }
 
 // Constructor
-func NewOrderService(r *repository.InMemoryOrderRepo) OrderService {
-	return OrderService{
+func NewOrderService(r *repository.InMemoryOrderRepo) *OrderService {
+	return &OrderService{
 		repo: r,
 	}
 }
@@ -25,7 +25,7 @@ func (s *OrderService) CreateOrder(order models.Order) models.Order {
 		order.Status = "PENDING"
 	}
 
-	s.repo.Save(order)
+	order = s.repo.Save(order)
 
 	return order
 }

@@ -11,7 +11,7 @@ type OrderHandler struct {
 	service *services.OrderService
 }
 
-func NewOrderService(s *services.OrderService) *OrderHandler {
+func NewOrderHandler(s *services.OrderService) *OrderHandler {
 	return &OrderHandler{
 		service: s,
 	}
