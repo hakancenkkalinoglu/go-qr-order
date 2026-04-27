@@ -10,7 +10,7 @@ type InMemoryOrderRepo struct {
 
 func NewInMemoryOrderRepo() *InMemoryOrderRepo {
 	return &InMemoryOrderRepo{
-		orders: make(map[init]models.Order),
+		orders: make(map[int]models.Order),
 	}
 }
 
