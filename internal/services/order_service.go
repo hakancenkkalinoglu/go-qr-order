@@ -33,3 +33,7 @@ func (s *OrderService) CreateOrder(order models.Order) models.Order {
 func (s *OrderService) GetOrder(id int) (models.Order, bool) {
 	return s.repo.GetById(id)
 }
+
+func (s *OrderService) GetAllOrders() []models.Order {
+	return s.repo.GetAll()
+}

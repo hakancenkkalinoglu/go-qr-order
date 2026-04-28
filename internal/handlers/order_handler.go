@@ -53,3 +53,12 @@ func (h *OrderHandler) GetOrderHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(order)
 }
+
+func (h *OrderHandler) GetAllOrdersHandler(w http.ResponseWriter, r *http.Request) {
+	allOrders := h.service.GetAllOrders()
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+	json.NewEncoder(w).Encode(allOrders)
+}
