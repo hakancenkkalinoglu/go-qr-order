@@ -13,7 +13,8 @@ func main() {
 	service := services.NewOrderService(repo)
 	handler := handlers.NewOrderHandler(service)
 
-	http.HandleFunc("/orders", handler.CreateOrderHandler)
+	http.HandleFunc("POST /orders", handler.CreateOrderHandler)
+	http.HandleFunc("GET /orders/{id}", handler.GetOrderHandler)
 	fmt.Println("Server starting..")
 
 	err := http.ListenAndServe(":8080", nil)
