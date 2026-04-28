@@ -28,3 +28,11 @@ func (r *InMemoryOrderRepo) GetById(id int) (models.Order, bool) {
 	order, exist := r.orders[id]
 	return order, exist
 }
+
+func (r *InMemoryOrderRepo) GetAll() []models.Order {
+	var allOrdersSlice []models.Order
+	for _, value := range r.orders {
+		allOrdersSlice = append(allOrdersSlice, value)
+	}
+	return allOrdersSlice
+}
