@@ -17,6 +17,7 @@ func main() {
 	http.HandleFunc("GET /orders/{id}", handler.GetOrderHandler)
 	http.HandleFunc("GET /orders", handler.GetAllOrdersHandler)
 	http.HandleFunc("PUT /orders/{id}", handler.UpdateOrderById)
+	http.HandleFunc("DELETE /orders/{id}", handler.DeleteOrderById)
 	fmt.Println("Server starting..")
 
 	err := http.ListenAndServe(":8080", nil)
