@@ -49,3 +49,8 @@ func (r *InMemoryOrderRepo) UpdateOrderById(id int, status string) models.Order 
 
 	return order
 }
+
+func (r *InMemoryOrderRepo) DeleteOrderById(id int) bool {
+	delete(r.orders, id)
+	return true
+}

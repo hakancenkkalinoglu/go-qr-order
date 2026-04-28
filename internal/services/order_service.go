@@ -40,10 +40,19 @@ func (s *OrderService) GetAllOrders() []models.Order {
 
 func (s *OrderService) UpdateOrderById(id int, status string) (models.Order, bool) {
 	_, isExist := s.GetOrder(id)
-	if isExist == false {
+	if !isExist {
 		return models.Order{}, false
 	}
 
 	updatedOrder := s.repo.UpdateOrderById(id, status)
 	return updatedOrder, true
+}
+
+func (s *OrderService) DeleteOrderById(id int) bool {
+	_, isExist := s.GetOrder(id)
+	if !isExist {
+		return false
+	}
+	s.repo.DeleteOrderById(id)
+	return true
 }

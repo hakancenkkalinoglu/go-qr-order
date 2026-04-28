@@ -89,3 +89,24 @@ func (h *OrderHandler) UpdateOrderById(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(order)
 
 }
+
+func (h *OrderHandler) DeleteOrderById(w http.ResponseWriter, r *http.Request) {
+	idString := r.PathValue("id")
+	id, err := strconv.Atoi(idString)
+	if err != nil {
+		http.Error(w, "Invalid Path Parameter", http.StatusBadRequest)
+		return
+	}
+
+	isDeleted := h.service.DeleteOrderById(id)
+
+	if isDeleted == false {
+		http.Error(w, "Error while deleting", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
+
+}
