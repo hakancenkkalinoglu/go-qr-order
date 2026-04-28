@@ -62,3 +62,30 @@ func (h *OrderHandler) GetAllOrdersHandler(w http.ResponseWriter, r *http.Reques
 
 	json.NewEncoder(w).Encode(allOrders)
 }
+
+func (h *OrderHandler) UpdateOrderById(w http.ResponseWriter, r *http.Request) {
+	idString := r.PathValue("id")
+	id, err := strconv.Atoi(idString)
+
+	if err != nil {
+		http.Error(w, "Invalid Path Parameter", http.StatusBadRequest)
+		return
+	}
+
+	var reqBody struct {
+		Status string `json:"status"`
+	}
+
+	json.NewDecoder(r.Body).Decode(&reqBody)
+	order, isExist := h.service.UpdateOrderById(id, reqBody.Status)
+
+	if isExist == false {
+		http.Error(w, "Order Not Found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(order)
+
+}

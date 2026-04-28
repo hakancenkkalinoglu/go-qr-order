@@ -37,3 +37,13 @@ func (s *OrderService) GetOrder(id int) (models.Order, bool) {
 func (s *OrderService) GetAllOrders() []models.Order {
 	return s.repo.GetAll()
 }
+
+func (s *OrderService) UpdateOrderById(id int, status string) (models.Order, bool) {
+	_, isExist := s.GetOrder(id)
+	if isExist == false {
+		return models.Order{}, false
+	}
+
+	updatedOrder := s.repo.UpdateOrderById(id, status)
+	return updatedOrder, true
+}
