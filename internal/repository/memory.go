@@ -2,6 +2,7 @@ package repository
 
 import (
 	"go-qr-order/internal/models"
+	"time"
 )
 
 type InMemoryOrderRepo struct {
@@ -35,4 +36,16 @@ func (r *InMemoryOrderRepo) GetAll() []models.Order {
 		allOrdersSlice = append(allOrdersSlice, value)
 	}
 	return allOrdersSlice
+}
+
+func (r *InMemoryOrderRepo) UpdateOrderById(id int, status string) models.Order {
+	order := r.orders[id]
+	order.Status = status
+	order.UpdatedAt = time.Now()
+
+	//avoid pass by value and ovveride the slice
+
+	r.orders[id] = order
+
+	return order
 }
