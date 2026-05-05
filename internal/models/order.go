@@ -19,3 +19,17 @@ type OrderItem struct {
 	Quantity int
 	Price    float64
 }
+
+type Category struct {
+	ID            int       `json:"id"`
+	Name          string    `json:"name"`
+	CategoryItems []Product `json:"category_items,omitempty"`
+}
+
+type Product struct {
+	ID         int     `json:"id"`
+	CategoryID int     `json:"category_id"`
+	Name       string  `json:"name"`
+	Quantity   int     `json:"quantity"`
+	Price      float64 `json:"price"`
+}

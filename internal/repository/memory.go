@@ -43,8 +43,6 @@ func (r *InMemoryOrderRepo) UpdateOrderById(id int, status string) models.Order 
 	order.Status = status
 	order.UpdatedAt = time.Now()
 
-	//avoid pass by value and ovveride the slice
-
 	r.orders[id] = order
 
 	return order
@@ -54,3 +52,5 @@ func (r *InMemoryOrderRepo) DeleteOrderById(id int) bool {
 	delete(r.orders, id)
 	return true
 }
+
+var _ OrderRepository = (*InMemoryOrderRepo)(nil)

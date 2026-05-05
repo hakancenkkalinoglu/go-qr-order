@@ -7,11 +7,11 @@ import (
 )
 
 type OrderService struct {
-	repo *repository.InMemoryOrderRepo
+	repo repository.OrderRepository
 }
 
 // Constructor
-func NewOrderService(r *repository.InMemoryOrderRepo) *OrderService {
+func NewOrderService(r repository.OrderRepository) *OrderService {
 	return &OrderService{
 		repo: r,
 	}
