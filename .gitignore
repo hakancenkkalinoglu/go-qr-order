@@ -1,0 +1,22 @@
+# Local secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+/bin/
+*.exe
+
+# SQLite data
+/data/*.db
+/data/*.db-*
+
+# Frontend (if present)
+/web/node_modules/
+/web/dist/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

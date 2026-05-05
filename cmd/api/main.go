@@ -9,10 +9,21 @@ import (
 	"go-qr-order/internal/services"
 	"log"
 	"net/http"
+	"os"
+	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	db, err := database.Open("data/app.db")
+	_ = godotenv.Load()
+
+	dbPath := strings.TrimSpace(os.Getenv("SQLITE_PATH"))
+	if dbPath == "" {
+		dbPath = "data/app.db"
+	}
+
+	db, err := database.Open(dbPath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,9 +53,15 @@ func main() {
 	http.HandleFunc("PUT /orders/{id}", middleware.RequestLogger(middleware.RequireAuth(orderHandler.UpdateOrderById)))
 	http.HandleFunc("DELETE /orders/{id}", middleware.RequestLogger(middleware.RequireAuth(orderHandler.DeleteOrderById)))
 
-	fmt.Println("Server starting..")
+	port := strings.TrimSpace(os.Getenv("PORT"))
+	if port == "" {
+		port = "8080"
+	}
+	addr := ":" + port
 
-	err = http.ListenAndServe(":8080", nil)
+	fmt.Println("Server starting on", addr)
+
+	err = http.ListenAndServe(addr, nil)
 
 	if err != nil {
 		fmt.Print("Serves not started\n", err)
