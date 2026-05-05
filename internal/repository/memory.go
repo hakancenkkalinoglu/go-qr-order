@@ -52,3 +52,5 @@ func (r *InMemoryOrderRepo) DeleteOrderById(id int) bool {
 	delete(r.orders, id)
 	return true
 }
+
+var _ OrderRepository = (*InMemoryOrderRepo)(nil)
