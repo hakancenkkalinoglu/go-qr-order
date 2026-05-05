@@ -2,12 +2,20 @@ package utils
 
 import (
 	"errors"
+	"os"
+	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
-var secretKey = []byte("secret-key-123-123")
+func jwtSecret() []byte {
+	s := strings.TrimSpace(os.Getenv("JWT_SECRET"))
+	if s == "" {
+		s = "secret-key-123-123"
+	}
+	return []byte(s)
+}
 
 func GenerateToken(role string, tableID int) (string, error) {
 	claims := jwt.MapClaims{
@@ -18,7 +26,7 @@ func GenerateToken(role string, tableID int) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	return token.SignedString(secretKey)
+	return token.SignedString(jwtSecret())
 }
 
 func ValidateToken(tokenString string) (jwt.MapClaims, error) {
@@ -26,7 +34,7 @@ func ValidateToken(tokenString string) (jwt.MapClaims, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("unsported sign")
 		}
-		return secretKey, nil
+		return jwtSecret(), nil
 	})
 
 	if err != nil {
