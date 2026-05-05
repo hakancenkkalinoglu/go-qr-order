@@ -19,3 +19,16 @@ type OrderItem struct {
 	Quantity int
 	Price    float64
 }
+
+type Category struct {
+	ID            int
+	name          string
+	CategoryItems []Product
+}
+
+type Product struct {
+	ID       int
+	Name     string
+	Quantity int
+	Price    float64
+}
